@@ -37,7 +37,8 @@ class TsDownloader:
                     os.remove(ts_filename)
 
         if not id_string in url:
-            raise Exception("No id string in url")
+            raise Exception(f"No id string '{id_string}' in url {url}")
+        
         tmp_file = "out-{}.ts"
         max_idx = download_ts(url, tmp_filename=tmp_file)
         if max_idx == 0:
@@ -49,8 +50,8 @@ class TsDownloader:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-u", required=True, help="url")
-    parser.add_argument("-s", default="$", help="string for id of ts part")
-    parser.add_argument("-o", default="out.msb", help="output file name")
+    parser.add_argument("-s", default="{}", help="string for id of ts part")
+    parser.add_argument("-o", default="out.mp4", help="output file name")
     args = parser.parse_args()
 
     TsDownloader.download(args.u, id_string=args.s, output_file=args.o)
